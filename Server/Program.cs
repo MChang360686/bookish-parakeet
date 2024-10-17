@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using music_manager_starter.Data;
 using System.Security.AccessControl;
+using SignalR.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,8 @@ builder.Services.AddDbContext<DataDbContext>(options => options.UseSqlite(builde
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -50,6 +53,7 @@ app.UseRouting();
 
 
 app.MapRazorPages();
+app.MapHub<SongHub>("/SongHub");
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 
